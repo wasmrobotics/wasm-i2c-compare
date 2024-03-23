@@ -1,0 +1,24 @@
+package wasm-robotics:robotics@0.1.0;
+
+use types;
+use imus;
+
+/// The `run` function takes the expected hardware resources as parameters.
+interface run {
+    run: func(loop-count: u32);
+}
+
+
+world imu-hc {
+    import imus;
+}
+
+world imu-client {
+    import imus;
+    export run;
+}
+
+world bp-hal {
+    import delay;
+    import i2c;
+}

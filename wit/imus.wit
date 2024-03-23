@@ -1,0 +1,70 @@
+package wasm-robotics:robotics@0.1.0;
+
+interface imus {
+    record calibration-data {
+        acc-offset-x-lsb: u8,
+        acc-offset-x-msb: u8,
+        acc-offset-y-lsb: u8,
+        acc-offset-y-msb: u8,
+        acc-offset-z-lsb: u8,
+        acc-offset-z-msb: u8,
+        mag-offset-x-lsb: u8,
+        mag-offset-x-msb: u8,
+        mag-offset-y-lsb: u8,
+        mag-offset-y-msb: u8,
+        mag-offset-z-lsb: u8,
+        mag-offset-z-msb: u8,
+        gyr-offset-x-lsb: u8,
+        gyr-offset-x-msb: u8,
+        gyr-offset-y-lsb: u8,
+        gyr-offset-y-msb: u8,
+        gyr-offset-z-lsb: u8,
+        gyr-offset-z-msb: u8,
+        acc-radius-lsb: u8,
+        acc-radius-msb: u8,
+        mag-radius-lsb: u8,
+        mag-radius-msb: u8,   
+    }
+
+    record axis-signs {
+        x-negative: bool,
+        y-negative: bool,
+        z-negative: bool
+    }
+
+    enum axis-config {
+        axis-x,
+        axis-y,
+        axis-z
+    }
+
+    record axis-remap {
+        x: axis-config,
+        y: axis-config,
+        z: axis-config
+    }
+
+    enum power-mode {
+        NORMAL,
+        LOW-POWER,
+        SUSPEND
+    }
+
+    use types.{access-error,  quaternion};
+    imu-named: func(name: string) -> result<imu, access-error>; // name into HW map including alternate address for IMU TODO
+    // Subset of underlying BNO055 interface focusing on that which we need first
+    // Still need axis remapping and axis sign mapping
+    resource imu {
+        calibrate: func() -> result<calibration-data, access-error>;
+        set-calibration: func(data: calibration-data) -> result<_, access-error>;
+        // TODO: should this be part of the API which makes it very BNO055 specific? or more general and include this in the hardware map?
+        set-external-crystal: func(enabled: bool) -> result<_, access-error>;
+        /// 
+        set-axis-remap: func(remap: axis-remap) -> result<_, access-error>;
+        axis-remap: func() -> result<axis-remap, access-error>;
+        set-axis-signs: func(signs: axis-signs) -> result<_, access-error>;
+        axis-signs: func() -> result<axis-signs, access-error>;
+        set-power-mode: func(mode: power-mode) -> result<_, access-error>;
+        quaternion: func() -> result<quaternion, access-error> ;  
+    }
+}

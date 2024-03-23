@@ -1,0 +1,64 @@
+[package]
+name = "wasm-hal-compare"
+version = "0.1.0"
+edition = "2021"
+keywords = ["wasm", "embedded", "hal"]
+description = "A comparison of the wasm-hal and wasm-hal-host crates"
+
+[workspace.package]
+authors = ["jeff.schilling@gmail.com"]
+categories = ["wasm"]
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/bletchly-park/wasm-hal"
+
+[dependencies]
+tikv-jemallocator = "0.5"
+
+anyhow = { workspace = true }
+bno055 = { workspace = true }
+dhat = { workspace = true }
+embedded-hal = { workspace = true }
+tracing = { workspace = true, features = ["attributes"] }
+imu-native = { workspace = true }
+linux-embedded-hal = "0.4.0"
+sample-imu = { workspace = true }
+tracing-subscriber = { workspace = true, features = ["fmt"] }
+wasmtime = { workspace = true, features = ["component-model"] }
+wasmtime-wasi = { workspace = true }
+wasm-hal-host = { workspace = true }
+
+[workspace.dependencies]
+anyhow = { version = "1", default-features = false }
+async-trait = "0.1.77"
+bno055 = "0.4.0"
+criterion = { version = "0.5.1", default-features = false }
+dhat = "0.3.2"
+embedded-hal = "1.0.0"
+imu-native = { path = "./crates/imu_native" }
+linux-embedded-hal = "0.4.0"
+sample-imu = { path = "./crates/imu" }
+tracing = { version = "0.1", default-features = false }
+tracing-subscriber = { version = "0.3", default-features = false }
+wasm-hal = { path = "./crates/wasm_hal" }
+wasm-hal-host = { path = "./crates/wasm_hal_host" }
+wasmtime = { version = "19.0.0" }
+wasmtime-wasi = { version = "19.0.0", default-features = false }
+
+[workspace]
+members = ["examples/*", "crates/*"]
+
+[profile.flamegraph]
+inherits = "release"
+debug = true
+
+[profile.dhat]
+inherits = "release"
+debug = 1
+
+
+[features]
+dhat-heap = []
+flamegraph = []
+profile = []
+jemalloc = []

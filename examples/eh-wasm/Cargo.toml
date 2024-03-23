@@ -1,0 +1,24 @@
+[package]
+name = "eh-wasm"
+version = "0.1.0"
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[package.metadata.component]
+package = "component:eh-wasm"
+
+[package.metadata.component.dependencies]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bitflags = "2.5.0"
+bno055 = { workspace = true }
+embedded-hal = "1.0.0"
+tracing = { workspace = true }
+wasm-hal = { workspace = true }
+wit-bindgen-rt = "0.22.0"
+criterion = { workspace = true, default-features = false }

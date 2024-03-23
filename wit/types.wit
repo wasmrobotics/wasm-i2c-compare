@@ -1,0 +1,17 @@
+package wasm-robotics:robotics@0.1.0;
+
+interface types {
+    variant access-error {
+        named-resource-not-found(string),
+        hardware-access-error(string)
+    }
+    
+    record quaternion {
+        x: f32,
+        y: f32,
+        z: f32,
+        w: f32,
+    }
+}
+
+

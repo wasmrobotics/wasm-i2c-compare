@@ -1,0 +1,24 @@
+[package]
+name = "imu-native"
+version = "0.1.0"
+authors.workspace = true
+categories.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = { workspace = true }
+criterion = { workspace = true, features = ["html_reports"] }
+bno055 = { workspace = true }
+embedded-hal = { workspace = true }
+linux-embedded-hal = { workspace = true }
+tracing = { workspace = true }
+
+
+[[bench]]
+name = "bench_native_imu"
+path = "benches/bench_native_imu.rs"
+harness = false
